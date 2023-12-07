@@ -7,6 +7,8 @@ import org.lovaprod.utils.MoneyUtils;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.lovaprod.service.AccountService.findUserByUsername;
+
 public class WalletService {
 
 
@@ -43,7 +45,7 @@ public class WalletService {
         System.out.print("Enter the destination username: ");
         String destinationUsername = scanner.nextLine();
 
-        User destinationUser = AccountService.findUserByUsername(destinationUsername, users);
+        User destinationUser = findUserByUsername(destinationUsername, users);
 
         if (destinationUser != null) {
             System.out.print("Enter the amount (in"+MoneyUtils.MONEY_UNIT+") to transfer: ");

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.lovaprod.service.AccountService.changePassword;
+import static org.lovaprod.service.AccountService.editPersonalInformation;
+import static org.lovaprod.service.AccountService.viewPersonalInformation;
+
 public class Main {
 
     private static List<User> accountList = new ArrayList<>();
@@ -16,9 +20,11 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         accountList.add(new User("mockUser1","mockPass1","mockUser1","","mockUser1@mai.com"));
+
         while (true) {
-            displayMenu();
+            displayHomeMenu();
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline
 
@@ -42,8 +48,9 @@ public class Main {
         }
     }
 
-    private static void displayMenu() {
+    private static void displayHomeMenu() {
         System.out.println(" ");
+        System.out.println("--- HOME ---");
         System.out.println("1. Sign Up");
         System.out.println("2. Sign In");
         System.out.println("3. Exit");
@@ -104,60 +111,6 @@ public class Main {
         System.out.println(" ");
         System.out.print("Enter your choice: ");
     }
-
-    private static void viewPersonalInformation(User user) {
-        // Display user's personal information
-        System.out.println(" ");
-        System.out.println("Personal Information:");
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("First Name: " + user.getFirstName());
-        System.out.println("Last Name: " + user.getLastName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Phone Number: " + user.getPhoneNumber());
-    }
-
-    private static void editPersonalInformation(Scanner scanner, User user) {
-            // Get user input for sign-up
-            System.out.print("Enter new Last Name: ");
-            String lastName = scanner.nextLine();
-
-            System.out.print("Enter new First Name: ");
-            String firstName = scanner.nextLine();
-
-            System.out.print("Enter new Email: ");
-            String email = scanner.nextLine();
-
-            System.out.print("Enter new PhoneNumber: ");
-            String phoneNumber = scanner.nextLine();
-
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setPhoneNumber(phoneNumber);
-
-            viewPersonalInformation(user);
-
-    }
-
-    private static void changePassword(Scanner scanner, User user) {
-        System.out.print("Enter current password: ");
-        String currentPassword = scanner.nextLine();
-
-        System.out.print("Enter new password: ");
-        String newPassword = scanner.nextLine();
-
-        System.out.print("repeat new password: ");
-        String repeatedPassword = scanner.nextLine();
-
-        if (currentPassword.equals(user.getPassword()) && newPassword.equals(repeatedPassword)){
-            user.setPassword(newPassword);
-            System.out.println("Password updated");
-
-        }else {
-            System.out.println("Wrong password");
-        }
-    }
-
 
 
 
