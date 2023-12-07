@@ -1,8 +1,9 @@
 const { Transaction } = require('./Transaction');
+const { uuid } = require('uuidv4');
 
 class TransactionHistory {
     constructor() {
-        this.id = uuidv4();
+        this.id = uuid();
         this.transactions = [];
     }
 

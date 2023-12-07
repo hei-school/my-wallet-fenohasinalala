@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({sigint:true});
+
 class AuthenticationService {
     constructor(users) {
         this.users = users;

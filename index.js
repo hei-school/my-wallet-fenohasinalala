@@ -4,6 +4,8 @@ const { WalletService } = require('./WalletService');
 const { User } = require('./User');
 const { MoneyUtils } = require('./MoneyUtils');
 
+const prompt = require("prompt-sync")({sigint:true});
+
 const users = [new User("mockUser1", "mockPass1", "mockUser1", "", "mockUser1@mai.com")];
 const authManager = new AuthenticationService(users);
 
