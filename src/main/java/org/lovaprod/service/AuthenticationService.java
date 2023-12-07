@@ -45,7 +45,6 @@ public class AuthenticationService {
     }
 
     public boolean signUp(String lastName, String firstName, String email, String username, String password) {
-        // Validate input (add your validation logic here)
 
         // Check if the username is already taken
         for (User user : accountList) {
@@ -64,7 +63,6 @@ public class AuthenticationService {
     }
 
     public User signIn(String username, String password) {
-        // Find the user in the account list (add your authentication logic here)
 
         for (User user : accountList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {

@@ -1,18 +1,19 @@
 package org.lovaprod;
 
-import org.lovaprod.model.Transaction;
 import org.lovaprod.model.User;
 import org.lovaprod.service.AuthenticationService;
-import org.lovaprod.utils.MoneyUtils;
+import org.lovaprod.service.WalletService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     private static List<User> accountList = new ArrayList<>();
     private static AuthenticationService authManager = new AuthenticationService(accountList);
     private static Scanner scanner = new Scanner(System.in);
+
 
     public static void main(String[] args) {
         accountList.add(new User("mockUser1","mockPass1","mockUser1","","mockUser1@mai.com"));
@@ -67,19 +68,19 @@ public class Main {
                     changePassword(scanner,currentUser);
                     break;
                 case 4:
-                    checkBalance(currentUser);
+                    WalletService.checkBalance(currentUser);
                     break;
                 case 5:
-                    addFunds(currentUser);
+                    WalletService.addFunds(scanner,currentUser);
                     break;
                 case 6:
-                    withdrawMoney(currentUser);
+                    WalletService.withdrawMoney(scanner,currentUser);
                     break;
                 case 7:
-                    peerToPeerTransfers(currentUser);
+                    WalletService.peerToPeerTransfers(scanner,currentUser,accountList);
                     break;
                 case 8:
-                    transactionHistory(currentUser);
+                    WalletService.transactionHistory(currentUser);
                     break;
                 case 9:
                     return; // Return to the main menu
@@ -157,77 +158,7 @@ public class Main {
         }
     }
 
-    private static void checkBalance(User user) {
-        // Display user's wallet balance
-        System.out.println("Wallet Balance: " + user.getWallet().getBalance() + MoneyUtils.MONEY_UNIT);
-    }
 
-    private static void addFunds(User user) {
-        // Allow user to add funds to the wallet
-        System.out.print("Enter the amount (in"+MoneyUtils.MONEY_UNIT+") to add: ");
-        double amount = scanner.nextDouble();
-        scanner.nextLine();
 
-        if (MoneyUtils.isAmountValid(amount)){
-            user.getWallet().deposit(amount);
-            System.out.println("Funds added successfully. New balance: " + user.getWallet().getBalance() + MoneyUtils.MONEY_UNIT);
-        }
-    }
 
-    private static void withdrawMoney(User user) {
-        // Allow user to withdraw money from the wallet
-        System.out.print("Enter the amount (in"+MoneyUtils.MONEY_UNIT+") to withdraw: ");
-        double amount = scanner.nextDouble();
-        scanner.nextLine(); // Consume the newline
-
-        if (user.getWallet().withdraw(amount)) {
-            System.out.println("Withdrawal successful. New balance: " + user.getWallet().getBalance() + MoneyUtils.MONEY_UNIT);
-        }
-    }
-
-    private static void peerToPeerTransfers(User user) {
-        // Allow user to make peer-to-peer transfers
-        System.out.print("Enter the destination username: ");
-        String destinationUsername = scanner.nextLine();
-
-        User destinationUser = findUserByUsername(destinationUsername);
-
-        if (destinationUser != null) {
-            System.out.print("Enter the amount (in"+MoneyUtils.MONEY_UNIT+") to transfer: ");
-            double amount = scanner.nextDouble();
-            scanner.nextLine(); // Consume the newline
-
-            if (user.getWallet().withdraw(amount, destinationUser)) {
-                System.out.println(amount + MoneyUtils.MONEY_UNIT + " send to : " + destinationUsername);
-                System.out.println("Transfer successful. New balance: " + user.getWallet().getBalance() + MoneyUtils.MONEY_UNIT);
-            }
-        } else {
-            System.out.println("User not found with the provided username.");
-        }
-    }
-
-    private static void transactionHistory(User user) {
-        // Display transaction history
-        List<Transaction> transactions = user.getWallet().getTransactionHistory().getTransactions();
-
-        System.out.println("Transaction History:");
-        for (Transaction transaction : transactions) {
-            System.out.println("Transaction ID: " + transaction.getId());
-            System.out.println("Amount: " + transaction.getAmount() + MoneyUtils.MONEY_UNIT);
-            System.out.println("Type: " + transaction.getType());
-            System.out.println("Destination: " + transaction.getDestination());
-            System.out.println("Transaction Date: " + transaction.getTransactionDate());
-            System.out.println("------");
-        }
-    }
-
-    private static User findUserByUsername(String username) {
-        // Find user by username in the account list
-        for (User user : accountList) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
-    }
 }
