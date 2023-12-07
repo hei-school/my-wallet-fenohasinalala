@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({sigint:true});
+
 class AccountService {
     static findUserByUsername(username, users) {
         return users.find(user => user.username === username);

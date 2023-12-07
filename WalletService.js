@@ -1,3 +1,8 @@
+const prompt = require("prompt-sync")({sigint:true});
+
+const { MoneyUtils} = require("./MoneyUtils")
+const { AccountService} = require("./AccountService")
+
 class WalletService {
     static checkBalance(user) {
         console.log("Wallet Balance:", user.wallet.balance);
