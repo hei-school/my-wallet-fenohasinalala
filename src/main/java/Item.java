@@ -8,10 +8,12 @@ public abstract class Item {
     private Size size;
     private Instant addedDate;
 
-    public Item(String owner) {
+    public Item(String owner, String status, Size size) {
         this.id = UUID.randomUUID().toString();
-        this.owner = owner;
-        // Initialize other attributes
+        this.owner = owner!=null && !owner.isEmpty() ? owner: "me";
+        this.status = status;
+        this.addedDate = Instant.now();
+        this.size = size;
     }
 
     public String getId() {

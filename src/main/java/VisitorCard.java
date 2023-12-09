@@ -1,3 +1,5 @@
+import java.time.Instant;
+
 public class VisitorCard extends Item {
     private String name;
     private String email;
@@ -5,7 +7,7 @@ public class VisitorCard extends Item {
     private String website;
 
     public VisitorCard(String owner, String name, String email, String phoneNumber, String website) {
-        super(owner);
+        super(owner, "OK", Size.MEDIUM);
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

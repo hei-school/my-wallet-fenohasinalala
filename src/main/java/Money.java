@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.util.HashMap;
 
 public class Money extends Item {
@@ -5,7 +6,7 @@ public class Money extends Item {
     private HashMap<Currency, Integer> presentMoney;
 
     public Money(String owner, Currency currency) {
-        super(owner);
+        super(owner, "OK", Size.LARGE);
         this.currency = currency;
         this.presentMoney = new HashMap<>();
         // Initialize other attributes

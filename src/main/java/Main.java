@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,9 +71,17 @@ public class Main {
 
     private static void displayWalletCapacity(Wallet wallet) {
         System.out.println("Wallet Capacity:");
-        wallet.getSpaceAvailable();
+        displaySpaceAvailable("Small", wallet, Size.SMALL);
+        displaySpaceAvailable("Medium", wallet, Size.MEDIUM);
+        displaySpaceAvailable("Large", wallet, Size.LARGE);
         System.out.println();
     }
+
+    private static void displaySpaceAvailable(String sizeName, Wallet wallet, Size size) {
+        int spaceAvailable = wallet.getSpaceAvailable(size);
+        System.out.println("Space available for " + sizeName + ": " + spaceAvailable);
+    }
+
 
     private static void addItem(Wallet wallet, Scanner scanner) {
         System.out.println("Adding item...");
@@ -95,28 +104,52 @@ public class Main {
                 addIDCard(wallet, scanner);
                 break;
             case 2:
-                addMoney(wallet, scanner);
+                // Print an error message for Money items
+                System.out.println("ERROR: NOT IMPLEMENTED YET for Money items.");
                 break;
-            // Add cases for other item types
+                /*
+            case 3:
+                addBankCard(wallet, scanner);
+                break;
+            case 4:
+                addDriverLicense(wallet, scanner);
+                break;
+            case 5:
+                addVisitorCard(wallet, scanner);
+                break;
+            case 6:
+                addIDPhoto(wallet, scanner);
+                break;
+
+                 */
             default:
                 System.out.println("Invalid item type. Returning to the main menu.");
         }
     }
 
     private static void addIDCard(Wallet wallet, Scanner scanner) {
-        // Implement logic to add an ID card to the wallet
-        // For simplicity, let's assume user provides necessary details
+        System.out.println("Adding ID Card...");
+
+        // Implement logic to gather information for an ID Card
         System.out.print("Enter state: ");
         String state = scanner.nextLine();
         System.out.print("Enter first name: ");
         String firstName = scanner.nextLine();
         System.out.print("Enter last name: ");
         String lastName = scanner.nextLine();
+        System.out.print("Enter birthdate (yyyy-MM-dd): ");
+        LocalDate birthdate = LocalDate.parse(scanner.nextLine());
+        System.out.print("Enter birth localisation: ");
+        String birthLocalisation = scanner.nextLine();
+        System.out.print("Enter ID number: ");
+        String number = scanner.nextLine();
 
-        IDCard idCard = new IDCard("me", state, firstName, lastName);
+        // Create a new ID Card and add it to the wallet
+        IDCard idCard = new IDCard("me", state, firstName, lastName, birthdate, birthLocalisation, number);
+
         wallet.add(idCard);
-        System.out.println("ID card added successfully.");
     }
+
 
     private static void addMoney(Wallet wallet, Scanner scanner) {
         // Implement logic to add money to the wallet

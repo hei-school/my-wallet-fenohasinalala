@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.time.LocalDate;
 
 public class BankCard extends Item {
@@ -9,7 +10,7 @@ public class BankCard extends Item {
     private String cardHolderName;
 
     public BankCard(String owner, String bankName, String offer, String cardNumber, LocalDate expirationDate, String CVVNumber, String cardHolderName) {
-        super(owner);
+        super(owner, "OK", Size.MEDIUM_AND_THICK);
         this.bankName = bankName;
         this.offer = offer;
         this.cardNumber = cardNumber;

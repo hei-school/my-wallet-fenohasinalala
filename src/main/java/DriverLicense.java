@@ -1,11 +1,11 @@
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class DriverLicense extends Item {
     private String state;
     private DriverLicenseCategory category;
 
     public DriverLicense(String owner, String state, DriverLicenseCategory category) {
-        super(owner);
+        super(owner, "OK", Size.MEDIUM_AND_THICK);
         this.state = state;
         this.category = category;
         // Initialize other attributes
