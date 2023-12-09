@@ -3,10 +3,9 @@ import java.time.Instant;
 public class IDPhoto extends Item {
     private String description;
 
-    public IDPhoto(String owner, int number, String description) {
+    public IDPhoto(String owner,  String description) {
         super(owner, "OK", Size.SMALL);
         this.description = description;
-        // Initialize other attributes
     }
 
     public void update() {

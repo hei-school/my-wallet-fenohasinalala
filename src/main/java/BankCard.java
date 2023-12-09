@@ -17,7 +17,6 @@ public class BankCard extends Item {
         this.expirationDate = expirationDate;
         this.CVVNumber = CVVNumber;
         this.cardHolderName = cardHolderName;
-        // Initialize other attributes
     }
 
     @Override

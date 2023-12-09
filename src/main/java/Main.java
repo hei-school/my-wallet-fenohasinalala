@@ -107,7 +107,6 @@ public class Main {
                 // Print an error message for Money items
                 System.out.println("ERROR: NOT IMPLEMENTED YET for Money items.");
                 break;
-                /*
             case 3:
                 addBankCard(wallet, scanner);
                 break;
@@ -121,7 +120,6 @@ public class Main {
                 addIDPhoto(wallet, scanner);
                 break;
 
-                 */
             default:
                 System.out.println("Invalid item type. Returning to the main menu.");
         }
@@ -196,6 +194,88 @@ public class Main {
             default:
                 System.out.println("Invalid item type. Returning to the main menu.");
         }
+    }
+
+    private static void addBankCard(Wallet wallet, Scanner scanner) {
+        System.out.println("Adding Bank Card...");
+
+        // Get user input for Bank Card attributes
+        System.out.print("Enter bank name: ");
+        String bankName = scanner.nextLine();
+        System.out.print("Enter offer: ");
+        String offer = scanner.nextLine();
+        System.out.print("Enter card number: ");
+        String cardNumber = scanner.nextLine();
+        System.out.print("Enter expiration date (yyyy-MM-dd): ");
+        LocalDate expirationDate = LocalDate.parse(scanner.nextLine());
+        System.out.print("Enter CVV number: ");
+        String CVVNumber = scanner.nextLine();
+        System.out.print("Enter card holder name: ");
+        String cardHolderName = scanner.nextLine();
+
+        // Create a BankCard object using the provided constructor
+        BankCard bankCard = new BankCard("me", bankName, offer, cardNumber, expirationDate, CVVNumber, cardHolderName);
+
+        // Add the BankCard to the wallet
+        wallet.add(bankCard);
+
+    }
+
+    private static void addDriverLicense(Wallet wallet, Scanner scanner) {
+        System.out.println("Adding Driver License...");
+
+        // Get user input for Driver License attributes
+        System.out.print("Enter state: ");
+        String state = scanner.nextLine();
+        System.out.print("Enter category (A, A1, B, BE, C, CE, D, DE): ");
+        String categoryString = scanner.nextLine();
+
+        // Convert the categoryString to DriverLicenseCategory
+        DriverLicenseCategory category = DriverLicenseCategory.valueOf(categoryString.toUpperCase());
+
+        // Create a DriverLicense object using the provided constructor
+        DriverLicense driverLicense = new DriverLicense("me", state, category);
+
+        // Add the DriverLicense to the wallet
+        wallet.add(driverLicense);
+
+    }
+
+
+    private static void addVisitorCard(Wallet wallet, Scanner scanner) {
+        System.out.println("Adding Visitor Card...");
+
+        // Get user input for Visitor Card attributes
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter website: ");
+        String website = scanner.nextLine();
+
+        // Create a VisitorCard object using the provided constructor
+        VisitorCard visitorCard = new VisitorCard("me", name, email, phoneNumber, website);
+
+        // Add the VisitorCard to the wallet
+        wallet.add(visitorCard);
+
+    }
+
+
+    private static void addIDPhoto(Wallet wallet, Scanner scanner) {
+
+        System.out.print("Enter number: ");
+        int number = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+        // Continue with other attributes
+
+        IDPhoto idPhoto = new IDPhoto("me", description);
+        wallet.add(idPhoto);
+        System.out.println("ID Photo added successfully.");
     }
 
     private static void displayTotalMoney(Wallet wallet) {
