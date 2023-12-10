@@ -21,6 +21,14 @@ public class VisitorCard extends Item {
 
     @Override
     public void viewItem() {
-        // Implement logic to view VisitorCard details
+        System.out.println("Name: " + DisplayUtils.formatNullOrEmptyValue(name));
+        System.out.println("Email: " + DisplayUtils.formatNullOrEmptyValue(email));
+        System.out.println("Phone Number: " + DisplayUtils.formatNullOrEmptyValue(phoneNumber));
+        System.out.println("Website: " + DisplayUtils.formatNullOrEmptyValue(website));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 }

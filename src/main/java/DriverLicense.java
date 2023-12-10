@@ -17,6 +17,12 @@ public class DriverLicense extends Item {
 
     @Override
     public void viewItem() {
-        // Implement logic to view DriverLicense details
+        System.out.println("State: " + DisplayUtils.formatNullOrEmptyValue(state));
+        System.out.println("Category: " + DisplayUtils.formatNullOrEmptyValue(String.valueOf(category)));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 }

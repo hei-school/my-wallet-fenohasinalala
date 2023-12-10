@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Money extends Item {
     private Currency currency;
-    private HashMap<Currency, Integer> presentMoney;
+    private HashMap<Double, Integer> presentMoney;
 
     public Money(String owner, Currency currency) {
         super(owner, "OK", Size.LARGE);
@@ -26,6 +26,14 @@ public class Money extends Item {
 
     @Override
     public void viewItem() {
-        // Implement logic to view Money details
+        System.out.println("Currency: " + currency);
+        System.out.println("Present Money:");
+        presentMoney.forEach((key, value) ->
+                System.out.println(key + " x " + value + " = " + (key * value)));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 }

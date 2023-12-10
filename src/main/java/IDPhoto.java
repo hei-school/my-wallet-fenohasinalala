@@ -14,6 +14,11 @@ public class IDPhoto extends Item {
 
     @Override
     public void viewItem() {
-        // Implement logic to view IDPhoto details
+        System.out.println("Description: " + DisplayUtils.formatNullOrEmptyValue(description));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 }

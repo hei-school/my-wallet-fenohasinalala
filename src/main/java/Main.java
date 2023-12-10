@@ -165,7 +165,6 @@ public class Main {
 
         Money money = new Money("me", selectedCurrency);
         wallet.add(money);
-        System.out.println("Money added successfully.");
     }
 
     private static void takeItem(Wallet wallet, Scanner scanner) {

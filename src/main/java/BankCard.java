@@ -21,6 +21,16 @@ public class BankCard extends Item {
 
     @Override
     public void viewItem() {
-        // Implement logic to view BankCard details
+        System.out.println("Bank Name: " + DisplayUtils.formatNullOrEmptyValue(bankName));
+        System.out.println("Offer: " + DisplayUtils.formatNullOrEmptyValue(offer));
+        System.out.println("Card Number: " + DisplayUtils.formatNullOrEmptyValue(cardNumber));
+        System.out.println("Expiration Date: " + DisplayUtils.formatNullOrEmptyValue(expirationDate));
+        System.out.println("CVV Number: " + DisplayUtils.formatNullOrEmptyValue(CVVNumber));
+        System.out.println("Card Holder Name: " + DisplayUtils.formatNullOrEmptyValue(cardHolderName));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 }

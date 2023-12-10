@@ -115,8 +115,17 @@ public class IDCard extends Item {
     // Override viewItem() method
     @Override
     public void viewItem() {
-        // Implement logic to display IDCard details
-        // ...
+        System.out.println("State: " + DisplayUtils.formatNullOrEmptyValue(state));
+        System.out.println("First Name: " + DisplayUtils.formatNullOrEmptyValue(firstName));
+        System.out.println("Last Name: " + DisplayUtils.formatNullOrEmptyValue(lastName));
+        System.out.println("Birthdate: " + DisplayUtils.formatNullOrEmptyValue(birthdate));
+        System.out.println("Birth Localisation: " + DisplayUtils.formatNullOrEmptyValue(birthLocalisation));
+        System.out.println("Number: " + DisplayUtils.formatNullOrEmptyValue(number));
+
+        System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
+        System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
+        System.out.println("Added date: " + super.getAddedDate());
+        System.out.println("--------------");
     }
 
 
