@@ -1,4 +1,3 @@
-
 public enum Currency {
-    MGA, USD, EUR
+  MGA, USD, EUR
 }

@@ -2,52 +2,53 @@ import java.time.Instant;
 import java.util.UUID;
 
 public abstract class Item {
-    private String id;
-    private String owner;
-    private String status;
-    private Size size;
-    private Instant addedDate;
 
-    public Item(String owner, String status, Size size) {
-        this.id = UUID.randomUUID().toString();
-        this.owner = owner!=null && !owner.isEmpty() ? owner: "me";
-        this.status = status;
-        this.addedDate = Instant.now();
-        this.size = size;
-    }
+  private String id;
+  private String owner;
+  private String status;
+  private Size size;
+  private Instant addedDate;
 
-    public String getId() {
-        return id;
-    }
+  public Item(String owner, String status, Size size) {
+    this.id = UUID.randomUUID().toString();
+    this.owner = owner != null && !owner.isEmpty() ? owner : "me";
+    this.status = status;
+    this.addedDate = Instant.now();
+    this.size = size;
+  }
 
-    public String getOwner() {
-        return owner;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public String getOwner() {
+    return owner;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public Size getSize() {
-        return size;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-    public void setSize(Size size) {
-        this.size = size;
-    }
+  public Size getSize() {
+    return size;
+  }
 
-    public Instant getAddedDate() {
-        return addedDate;
-    }
+  public void setSize(Size size) {
+    this.size = size;
+  }
 
-    public void setAddedDate(Instant addedDate) {
-        this.addedDate = addedDate;
-    }
+  public Instant getAddedDate() {
+    return addedDate;
+  }
 
-    public abstract void viewItem();
+  public void setAddedDate(Instant addedDate) {
+    this.addedDate = addedDate;
+  }
+
+  public abstract void viewItem();
 }
 
