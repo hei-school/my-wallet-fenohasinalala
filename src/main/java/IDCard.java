@@ -115,6 +115,8 @@ public class IDCard extends Item {
     // Override viewItem() method
     @Override
     public void viewItem() {
+
+        System.out.println("Type: ID Card");
         System.out.println("State: " + DisplayUtils.formatNullOrEmptyValue(state));
         System.out.println("First Name: " + DisplayUtils.formatNullOrEmptyValue(firstName));
         System.out.println("Last Name: " + DisplayUtils.formatNullOrEmptyValue(lastName));

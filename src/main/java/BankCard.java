@@ -21,6 +21,7 @@ public class BankCard extends Item {
 
     @Override
     public void viewItem() {
+        System.out.println("Type: Bank card");
         System.out.println("Bank Name: " + DisplayUtils.formatNullOrEmptyValue(bankName));
         System.out.println("Offer: " + DisplayUtils.formatNullOrEmptyValue(offer));
         System.out.println("Card Number: " + DisplayUtils.formatNullOrEmptyValue(cardNumber));

@@ -50,7 +50,7 @@ public class Main {
     }
 
     private static void displayMainMenu() {
-        System.out.println("Home Menu:");
+        System.out.println("----- Home ------");
         System.out.println("1. Display a list of items from the wallet");
         System.out.println("2. Display the capacity available of the wallet");
         System.out.println("3. Add item");
@@ -63,7 +63,10 @@ public class Main {
     private static void displayItems(Wallet wallet) {
         System.out.println("Items in the wallet:");
         List<Item> items = wallet.getItems();
+        int count = 0;
         for (Item item : items) {
+            count +=1;
+            System.out.println("No. "+count);
             item.viewItem();
         }
         System.out.println();

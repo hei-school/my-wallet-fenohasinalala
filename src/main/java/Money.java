@@ -26,6 +26,7 @@ public class Money extends Item {
 
     @Override
     public void viewItem() {
+        System.out.println("Type: Money");
         System.out.println("Currency: " + currency);
         System.out.println("Present Money:");
         presentMoney.forEach((key, value) ->

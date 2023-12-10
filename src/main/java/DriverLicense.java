@@ -17,6 +17,7 @@ public class DriverLicense extends Item {
 
     @Override
     public void viewItem() {
+        System.out.println("Type: Driver License");
         System.out.println("State: " + DisplayUtils.formatNullOrEmptyValue(state));
         System.out.println("Category: " + DisplayUtils.formatNullOrEmptyValue(String.valueOf(category)));
 

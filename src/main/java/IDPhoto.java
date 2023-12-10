@@ -14,6 +14,7 @@ public class IDPhoto extends Item {
 
     @Override
     public void viewItem() {
+        System.out.println("Type: ID Photo");
         System.out.println("Description: " + DisplayUtils.formatNullOrEmptyValue(description));
 
         System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
