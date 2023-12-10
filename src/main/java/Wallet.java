@@ -38,7 +38,7 @@ public class Wallet {
       Size itemSize = item.getSize();
       Size convertedSize = convertSize(itemSize);
       if (item instanceof Money) {
-        itemCount += (size == convertedSize)? ((Money) item).getTotalNumber(): 0;
+        itemCount += (size == convertedSize) ? ((Money) item).getTotalNumber() : 0;
       } else {
         itemCount += (size == convertedSize) ? getCapacityNumber(itemSize) : 0;
       }
@@ -112,12 +112,23 @@ public class Wallet {
   }
 
   public List<Money> getMoneyList() {
-    List<Money>  moneyList = new ArrayList<>();
+    List<Money> moneyList = new ArrayList<>();
     for (Item item : items) {
       if (item instanceof Money money) {
         moneyList.add((Money) item);
       }
     }
     return moneyList;
+  }
+
+  public void cleanUpMoneyRest() {
+    for (Item item : items) {
+      if (item instanceof Money) {
+        ((Money) item).removeZeroValueEntries();
+        if (((Money) item).getPresentMoney().isEmpty()) {
+          take(item);
+        }
+      }
+    }
   }
 }

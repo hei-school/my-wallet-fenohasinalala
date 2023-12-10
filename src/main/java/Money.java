@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Money extends Item {
 
@@ -51,16 +53,7 @@ public class Money extends Item {
   }
 
   public void retireMoney(double value, int number) {
-    if (presentMoney.containsKey(value)) {
-      if (presentMoney.get(value) >= number) {
-        presentMoney.put(value, presentMoney.getOrDefault(value, 0) - number);
-      } else {
-        System.out.println("for Money" + value + " you want to take, " + number
-            + " is more than what is present in the wallet: " + presentMoney.get(value));
-      }
-    }
-    ;
-
+    presentMoney.put(value, presentMoney.getOrDefault(value, 0) - number);
   }
 
   @Override
@@ -80,5 +73,15 @@ public class Money extends Item {
   private double convertStringValueToDouble(String value) {
     String validNumber = value.replaceAll("_", "");
     return Double.parseDouble(validNumber);
+  }
+
+  public void removeZeroValueEntries() {
+    Iterator<Entry<Double, Integer>> iterator = presentMoney.entrySet().iterator();
+    while (iterator.hasNext()) {
+      Map.Entry<Double, Integer> entry = iterator.next();
+      if (entry.getValue() == 0) {
+        iterator.remove();
+      }
+    }
   }
 }
