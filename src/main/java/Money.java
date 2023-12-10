@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Money extends Item {
 
@@ -12,16 +13,54 @@ public class Money extends Item {
     // Initialize other attributes
   }
 
-  public void getTotalAmount() {
-    // Implement logic to calculate total amount of money
+
+  public Currency getCurrency() {
+    return currency;
   }
 
-  public void addMoney(double valueToAdd, int numberToAdd) {
-    // Implement logic to add money to the wallet
+  public void setCurrency(Currency currency) {
+    this.currency = currency;
   }
 
-  public void retireMoney(double valueToTake, int numberToTake) {
-    // Implement logic to retire money from the wallet
+  public HashMap<Double, Integer> getPresentMoney() {
+    return presentMoney;
+  }
+
+  public void setPresentMoney(HashMap<Double, Integer> presentMoney) {
+    this.presentMoney = presentMoney;
+  }
+
+  public double getTotalAmount() {
+    double totalAmount = 0.0;
+    for (Map.Entry<Double, Integer> entry : presentMoney.entrySet()) {
+      totalAmount += entry.getKey() * entry.getValue();
+    }
+    return totalAmount;
+  }
+
+  public int getTotalNumber() {
+    int total = 0;
+    for (Map.Entry<Double, Integer> entry : presentMoney.entrySet()) {
+      total += entry.getValue();
+    }
+    return total;
+  }
+
+  public void addMoney(double value, int number) {
+    presentMoney.put(value, presentMoney.getOrDefault(value, 0) + number);
+  }
+
+  public void retireMoney(double value, int number) {
+    if (presentMoney.containsKey(value)) {
+      if (presentMoney.get(value) >= number) {
+        presentMoney.put(value, presentMoney.getOrDefault(value, 0) - number);
+      } else {
+        System.out.println("for Money" + value + " you want to take, " + number
+            + " is more than what is present in the wallet: " + presentMoney.get(value));
+      }
+    }
+    ;
+
   }
 
   @Override
@@ -36,5 +75,10 @@ public class Money extends Item {
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
+  }
+
+  private double convertStringValueToDouble(String value) {
+    String validNumber = value.replaceAll("_", "");
+    return Double.parseDouble(validNumber);
   }
 }

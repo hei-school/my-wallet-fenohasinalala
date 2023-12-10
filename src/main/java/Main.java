@@ -61,16 +61,19 @@ public class Main {
   }
 
   private static void displayItems(Wallet wallet) {
+    System.out.println(" ");
     System.out.println("Items in the wallet:");
     List<Item> items = wallet.getItems();
+
     int count = 0;
     for (Item item : items) {
       count += 1;
       System.out.println("No. " + count);
       item.viewItem();
     }
-    System.out.println();
+    System.out.println(" ");
   }
+
 
   private static void displayWalletCapacity(Wallet wallet) {
     System.out.println("Wallet Capacity:");
@@ -97,6 +100,8 @@ public class Main {
     System.out.println("4. Driver License");
     System.out.println("5. Visitor Card");
     System.out.println("6. ID Photo");
+    System.out.println("7. Return to main menu");
+    System.out.println(" ");
     System.out.print("Enter your choice: ");
     int itemType = scanner.nextInt();
     scanner.nextLine(); // Consume the newline character
@@ -107,8 +112,7 @@ public class Main {
         addIDCard(wallet, scanner);
         break;
       case 2:
-        // Print an error message for Money items
-        System.out.println("ERROR: NOT IMPLEMENTED YET for Money items.");
+        addMoney(wallet, scanner);
         break;
       case 3:
         addBankCard(wallet, scanner);
@@ -122,7 +126,9 @@ public class Main {
       case 6:
         addIDPhoto(wallet, scanner);
         break;
-
+      case 7:
+        System.out.println("Returning to the main menu.");
+        return;
       default:
         System.out.println("Invalid item type. Returning to the main menu.");
     }
@@ -154,8 +160,6 @@ public class Main {
 
 
   private static void addMoney(Wallet wallet, Scanner scanner) {
-    // Implement logic to add money to the wallet
-    // For simplicity, let's assume user provides necessary details
     System.out.println("Adding Money...");
 
     // Display supported currencies
@@ -166,36 +170,63 @@ public class Main {
     System.out.print("Select currency: ");
     String currencyInput = scanner.nextLine();
     Currency selectedCurrency = Currency.valueOf(currencyInput);
+    Money money = wallet.getMoney(selectedCurrency);
+    int no = 0;
+    for (double v: selectedCurrency.getValues()) {
+      System.out.println("no. "+no+" - "+v);
+      no +=1;
+    }
+    System.out.print("enter the no. of the Money: ");
+    int index = scanner.nextInt();
+    double value = selectedCurrency.getValues()[index];
 
-    Money money = new Money("me", selectedCurrency);
-    wallet.add(money);
+    System.out.print("Enter the number: ");
+    int number = scanner.nextInt();
+    int freeSpace = wallet.getSpaceAvailable(Size.LARGE);
+    if(freeSpace < number){
+      System.out.println("the number: "+number+" is more than the space available: "+ freeSpace);
+      return;
+    }
+
+    if (money==null){
+      Money temp = new Money("me", selectedCurrency);
+      temp.addMoney(value,number);
+      wallet.add(temp);
+    } else {
+      money.addMoney(value,number);
+    }
+
+
   }
 
   private static void takeItem(Wallet wallet, Scanner scanner) {
     System.out.println("Taking item...");
 
-    // Implement logic to take an item from the wallet
-    // For simplicity, let's assume user provides necessary details
+    // Display all items with numbers
+    displayItems(wallet);
 
-    // Display item types
-    System.out.println("Select the type of item to take:");
-    System.out.println("1. ID card");
-    System.out.println("2. Money");
-    // Add cases for other item types
-    System.out.print("Enter your choice: ");
-    int itemType = scanner.nextInt();
+    // Get user input for the item number to take
+    System.out.print("Enter the number of the item to take: ");
+    int itemNumber = scanner.nextInt();
     scanner.nextLine(); // Consume the newline character
 
-    switch (itemType) {
-      case 1:
-        // Implement logic to take an ID card
-        break;
-      case 2:
-        // Implement logic to take money
-        break;
-      // Add cases for other item types
-      default:
-        System.out.println("Invalid item type. Returning to the main menu.");
+    // Check if the entered item number is valid
+    List<Item> items = wallet.getItems();
+    if (itemNumber > 0 && itemNumber <= items.size()) {
+      // Confirm the action
+      System.out.print("Are you sure you want to take this item? (yes/no): ");
+      String confirmation = scanner.nextLine().toLowerCase();
+
+      if (confirmation.equals("yes")) {
+        // Remove the selected item from the wallet
+        Item selectedItem = items.get(itemNumber - 1);
+        wallet.take(selectedItem);
+        System.out.println("Item taken successfully.");
+      } else {
+        System.out.println("Action canceled. Returning to the main menu.");
+      }
+    } else {
+      System.out.println("Invalid item number. Returning to the main menu.");
     }
   }
 
@@ -284,6 +315,12 @@ public class Main {
 
   private static void displayTotalMoney(Wallet wallet) {
     System.out.println("Total Money in the Wallet:");
-    System.out.println();
+    List<Money> moneyList = wallet.getMoneyList();
+    for (Money money: moneyList) {
+      System.out.println("Currency: "+money.getCurrency());
+      System.out.println("Total amount: "+ money.getTotalAmount());
+      System.out.println("----------------");
+    }
+    System.out.println(" ");
   }
 }
