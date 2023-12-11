@@ -71,7 +71,6 @@ public class Wallet {
     };
   }
 
-
   public void take(Item item) {
     items.remove(item);
   }
@@ -92,16 +91,6 @@ public class Wallet {
       }
     }
 
-  }
-
-  private boolean isSpaceAvailable(Size size, int itemCount) {
-    return capacity.getOrDefault(size, 0) >= itemCount;
-  }
-
-
-  private void displaySpaceAvailable(Size size, int itemCount) {
-    int remainingCapacity = capacity.getOrDefault(size, 0) - itemCount;
-    System.out.println("Space available for " + size + ": " + remainingCapacity);
   }
 
   public Money getMoney(Currency currency) {

@@ -20,7 +20,6 @@ public class Money extends Item {
     // Initialize other attributes
   }
 
-
   public Currency getCurrency() {
     return currency;
   }
@@ -66,18 +65,12 @@ public class Money extends Item {
     System.out.println("Type: model.Money");
     System.out.println("model.enums.Currency: " + currency);
     System.out.println("Present model.Money:");
-    presentMoney.forEach((key, value) ->
-        System.out.println(key + " x " + value + " = " + (key * value)));
+    presentMoney.forEach((key, value) -> System.out.println(key + " x " + value + " = " + (key * value)));
 
     System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
-  }
-
-  private double convertStringValueToDouble(String value) {
-    String validNumber = value.replaceAll("_", "");
-    return Double.parseDouble(validNumber);
   }
 
   public void removeZeroValueEntries() {

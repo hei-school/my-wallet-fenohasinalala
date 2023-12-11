@@ -135,7 +135,6 @@ public class IDCard extends Item {
     System.out.println("--------------");
   }
 
-
   @Override
   public String toString() {
     return "model.IDCard{" +

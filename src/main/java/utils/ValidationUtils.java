@@ -53,7 +53,6 @@ public class ValidationUtils {
     return true;
   }
 
-
   public static boolean isValidNumberAndValue(String n, int min, int max) {
     if (!isValidNumber(n)) {
       return false;
@@ -65,7 +64,6 @@ public class ValidationUtils {
     }
     return true;
   }
-
 
   public static boolean isValidNumberAndLength(String n, int min, int max) {
     if (!isValidNumber(n)) {
