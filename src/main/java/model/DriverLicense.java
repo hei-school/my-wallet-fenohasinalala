@@ -2,6 +2,7 @@ package model;
 
 import model.enums.DriverLicenseCategory;
 import model.enums.Size;
+import utils.DisplayUtils;
 
 public class DriverLicense extends Item {
 

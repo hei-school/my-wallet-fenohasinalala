@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import model.enums.Size;
+import utils.DisplayUtils;
 
 public class BankCard extends Item {
 

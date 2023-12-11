@@ -1,6 +1,7 @@
 package model;
 
 import model.enums.Size;
+import utils.DisplayUtils;
 
 public class VisitorCard extends Item {
 
