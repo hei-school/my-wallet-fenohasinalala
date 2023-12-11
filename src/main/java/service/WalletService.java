@@ -46,7 +46,6 @@ public class WalletService {
     wallet.add(idCard);
   }
 
-
   public static void addMoney(Wallet wallet, Scanner scanner) {
     System.out.println(" ");
     System.out.println("Adding Money...");
@@ -102,7 +101,6 @@ public class WalletService {
 
   }
 
-
   public static void takeMoney(Money selectedItem, Wallet wallet, Scanner scanner) {
 
     Integer maxCount = selectedItem.getItemCount();
@@ -127,12 +125,11 @@ public class WalletService {
         "Successfully take " + moneyCount + " x " + selectedItem.getCurrency() + " " + value);
   }
 
-
   public static void takeMany(Item selectedItem, Wallet wallet, Scanner scanner) {
 
     Integer maxCount = selectedItem.getItemCount();
     System.out.println(
-        "You can take up to : " + maxCount + " for this item" );
+        "You can take up to : " + maxCount + " for this item");
     System.out.println("Enter the item count: ");
     String itemCountTemp = scanner.nextLine();
     int min1 = 1;
@@ -146,15 +143,15 @@ public class WalletService {
       wallet.take(selectedItem);
     } else {
       Item itemInWallet = wallet.getItemById(selectedItem.getId());
-      if (itemInWallet instanceof VisitorCard){
+      if (itemInWallet instanceof VisitorCard) {
         ((VisitorCard) itemInWallet).retirePartially(itemCount);
       }
-      if (itemInWallet instanceof IDPhoto){
+      if (itemInWallet instanceof IDPhoto) {
         ((IDPhoto) itemInWallet).retirePartially(itemCount);
       }
     }
     System.out.println(
-        "Successfully take " + itemCount );
+        "Successfully take " + itemCount);
   }
 
   public static void addBankCard(Wallet wallet, Scanner scanner) {
@@ -168,7 +165,7 @@ public class WalletService {
     String offer = scanner.nextLine();
     System.out.print("Enter card number: ");
     String cardNumber = scanner.nextLine();
-    //validation
+    // validation
 
     int min = 12;
     int max = 19;
@@ -183,7 +180,7 @@ public class WalletService {
     LocalDate expirationDate = LocalDate.parse(expirationDateTemp);
     System.out.print("Enter CVV number: ");
     String CVVNumber = scanner.nextLine();
-    //validation
+    // validation
     int length = 3;
     if (!ValidationUtils.isValidNumberAndLength(CVVNumber, length)) {
       return;
@@ -222,7 +219,6 @@ public class WalletService {
     wallet.add(driverLicense);
 
   }
-
 
   public static void addVisitorCard(Wallet wallet, Scanner scanner) {
     System.out.println("Adding Visitor Card...");

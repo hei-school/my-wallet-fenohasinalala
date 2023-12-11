@@ -110,9 +110,9 @@ public class Wallet {
     return moneyList;
   }
 
-  public Item getItemById(String id){
+  public Item getItemById(String id) {
     for (Item item : items) {
-      if (Objects.equals(item.getId(), id)){
+      if (Objects.equals(item.getId(), id)) {
         return item;
       }
     }

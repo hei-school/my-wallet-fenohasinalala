@@ -98,7 +98,6 @@ public class Main {
     System.out.println(" ");
   }
 
-
   private static void displayWalletCapacity(Wallet wallet) {
     System.out.println();
     System.out.println("Wallet Capacity:");
@@ -111,7 +110,6 @@ public class Main {
     int spaceAvailable = wallet.getSpaceAvailable(size);
     System.out.println("Space available for " + sizeName + ": " + spaceAvailable);
   }
-
 
   private static void addItem(Wallet wallet, Scanner scanner) {
     System.out.println(" ");
@@ -197,8 +195,8 @@ public class Main {
 
         if (selectedItem instanceof Money) {
           takeMoney((Money) selectedItem, wallet, scanner);
-        } else if (selectedItem instanceof IDPhoto || selectedItem instanceof VisitorCard){
-          WalletService.takeMany(selectedItem,wallet,scanner);
+        } else if (selectedItem instanceof IDPhoto || selectedItem instanceof VisitorCard) {
+          WalletService.takeMany(selectedItem, wallet, scanner);
         } else {
           wallet.take(selectedItem);
           System.out.println("Item taken successfully.");
@@ -210,7 +208,6 @@ public class Main {
       System.out.println("Invalid item number. Returning to the main menu.");
     }
   }
-
 
   private static void displayTotalMoney(Wallet wallet) {
     System.out.println("Total Money in the Wallet:");
@@ -225,6 +222,5 @@ public class Main {
     }
     System.out.println(" ");
   }
-
 
 }

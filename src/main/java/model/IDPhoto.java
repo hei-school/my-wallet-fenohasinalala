@@ -24,6 +24,7 @@ public class IDPhoto extends Item {
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
   }
+
   public void addPartially(int number) {
     itemCount = itemCount + number;
   }
@@ -31,6 +32,7 @@ public class IDPhoto extends Item {
   public void retirePartially(int number) {
     itemCount = itemCount - number;
   }
+
   @Override
   public int getItemCount() {
     return itemCount;
