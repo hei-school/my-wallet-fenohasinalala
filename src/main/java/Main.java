@@ -14,9 +14,12 @@ public class Main {
     while (true) {
       displayMainMenu();
       String choiceTemp = scanner.nextLine();
-      scanner.nextLine(); // Consume the newline character
+      int min = 1;
+      int max = 6;
+      if (!ValidationUtils.isValidNumberAndValue(choiceTemp, min, max)) {
+        continue;
+      }
       int choice = Integer.parseInt(choiceTemp);
-
 
       switch (choice) {
         case 1:
@@ -112,7 +115,11 @@ public class Main {
     System.out.println(" ");
     System.out.print("Enter your choice: ");
     String itemTypeTemp = scanner.nextLine();
-    scanner.nextLine(); // Consume the newline character
+    int min = 1;
+    int max = 7;
+    if (!ValidationUtils.isValidNumberAndValue(itemTypeTemp, min, max)) {
+      return;
+    }
     int itemType = Integer.parseInt(itemTypeTemp);
 
     // Handle each item type
@@ -143,76 +150,6 @@ public class Main {
     }
   }
 
-  private static void addIDCard(Wallet wallet, Scanner scanner) {
-    System.out.println(" ");
-    System.out.println("Adding ID Card...");
-
-    // Implement logic to gather information for an ID Card
-    System.out.print("Enter state: ");
-    String state = scanner.nextLine();
-    System.out.print("Enter first name: ");
-    String firstName = scanner.nextLine();
-    System.out.print("Enter last name: ");
-    String lastName = scanner.nextLine();
-    System.out.print("Enter birthdate (yyyy-MM-dd): ");
-    LocalDate birthdate = LocalDate.parse(scanner.nextLine());
-    System.out.print("Enter birth localisation: ");
-    String birthLocalisation = scanner.nextLine();
-    System.out.print("Enter ID number: ");
-    String number = scanner.nextLine();
-
-    // Create a new ID Card and add it to the wallet
-    IDCard idCard = new IDCard("me", state, firstName, lastName, birthdate, birthLocalisation,
-        number);
-
-    wallet.add(idCard);
-  }
-
-
-  private static void addMoney(Wallet wallet, Scanner scanner) {
-    System.out.println(" ");
-    System.out.println("Adding Money...");
-
-    // Display supported currencies
-    System.out.println("Supported currencies:");
-    for (Currency currency : Currency.values()) {
-      System.out.println(currency.name());
-    }
-    System.out.print("Select currency: ");
-    String currencyInput = scanner.nextLine();
-    Currency selectedCurrency = Currency.valueOf(currencyInput);
-    Money money = wallet.getMoney(selectedCurrency);
-    int no = 0;
-    for (double v : selectedCurrency.getValues()) {
-      no += 1;
-      System.out.println("No. " + no + " - " + v);
-    }
-    System.out.print("enter the no. of the Money: ");
-    String indexTemp = scanner.nextLine();
-    int index = Integer.parseInt(indexTemp);
-    double value = selectedCurrency.getValues()[index-1];
-
-    System.out.print("Enter the number: ");
-    String numberTemp = scanner.nextLine();
-    int number = Integer.parseInt(numberTemp);
-    int freeSpace = wallet.getSpaceAvailable(Size.LARGE);
-    if (freeSpace < number) {
-      System.out.println(
-          "the number: " + number + " is more than the space available: " + freeSpace);
-      return;
-    }
-
-    if (money == null) {
-      Money temp = new Money("me", selectedCurrency);
-      temp.addMoney(value, number);
-      wallet.add(temp);
-    } else {
-      money.addMoney(value, number);
-    }
-
-
-  }
-
   private static void takeItem(Wallet wallet, Scanner scanner) {
     System.out.println(" ");
     System.out.println("Taking item...");
@@ -226,8 +163,12 @@ public class Main {
     // Get user input for the item number to take
     System.out.print("Enter the no. of the item to take: ");
     String itemNumberTemp = scanner.nextLine();
+    int min = 1;
+    int max = wallet.getItems().size();
+    if (!ValidationUtils.isValidNumberAndValue(itemNumberTemp, min, max)) {
+      return;
+    }
     int itemNumber = Integer.parseInt(itemNumberTemp);
-    scanner.nextLine(); // Consume the newline character
 
     // Check if the entered item number is valid
     List<Item> items = wallet.getItems();
@@ -255,6 +196,108 @@ public class Main {
     }
   }
 
+
+  private static void displayTotalMoney(Wallet wallet) {
+    System.out.println("Total Money in the Wallet:");
+    List<Money> moneyList = wallet.getMoneyList();
+    for (Money money : moneyList) {
+      System.out.println("Currency: " + money.getCurrency());
+      System.out.println("Total amount: " + money.getTotalAmount());
+      System.out.println("----------------");
+    }
+    if (moneyList.isEmpty()) {
+      System.out.println("No money at all!");
+    }
+    System.out.println(" ");
+  }
+
+  private static void addIDCard(Wallet wallet, Scanner scanner) {
+    System.out.println(" ");
+    System.out.println("Adding ID Card...");
+
+    // Implement logic to gather information for an ID Card
+    System.out.print("Enter State (Country): ");
+    String state = scanner.nextLine();
+    System.out.print("Enter first name: ");
+    String firstName = scanner.nextLine();
+    System.out.print("Enter last name: ");
+    String lastName = scanner.nextLine();
+    System.out.print("Enter birthdate (yyyy-MM-dd): ");
+    String birthdateTemp = scanner.nextLine();
+    if (!ValidationUtils.isValidLocalDateInput(birthdateTemp)) {
+      return;
+    }
+    LocalDate birthdate = LocalDate.parse(birthdateTemp);
+    System.out.print("Enter birth localisation: ");
+    String birthLocalisation = scanner.nextLine();
+    System.out.print("Enter ID number: ");
+    String number = scanner.nextLine();
+
+    // Create a new ID Card and add it to the wallet
+    IDCard idCard = new IDCard("me", state, firstName, lastName, birthdate, birthLocalisation,
+        number);
+
+    wallet.add(idCard);
+  }
+
+
+  private static void addMoney(Wallet wallet, Scanner scanner) {
+    System.out.println(" ");
+    System.out.println("Adding Money...");
+
+    // Display supported currencies
+    System.out.println("Supported currencies:");
+    for (Currency currency : Currency.values()) {
+      System.out.println(currency.name());
+    }
+    System.out.print("Select currency: ");
+    String currencyInput = scanner.nextLine();
+    if (!ValidationUtils.isPresentInEnumArray(currencyInput, Currency.values())) {
+      return;
+    }
+
+    Currency selectedCurrency = Currency.valueOf(currencyInput);
+    Money money = wallet.getMoney(selectedCurrency);
+    int no = 0;
+    for (double v : selectedCurrency.getValues()) {
+      no += 1;
+      System.out.println("No. " + no + " - " + v);
+    }
+    System.out.print("enter the no. of the Money: ");
+    String indexTemp = scanner.nextLine();
+    int min = 1;
+    int max = no;
+    if (!ValidationUtils.isValidNumberAndValue(indexTemp, min, max)) {
+      return;
+    }
+    int index = Integer.parseInt(indexTemp);
+    double value = selectedCurrency.getValues()[index - 1];
+
+    System.out.print("Enter the number: ");
+    String numberTemp = scanner.nextLine();
+    if (!ValidationUtils.isValidPositiveNumber(numberTemp)) {
+      return;
+    }
+    int number = Integer.parseInt(numberTemp);
+    int freeSpace = wallet.getSpaceAvailable(Size.LARGE);
+    if (freeSpace < number) {
+      System.out.println(
+          "the number: " + number + " is more than the space available: " + freeSpace);
+      return;
+    }
+
+    if (money == null) {
+      Money temp = new Money("me", selectedCurrency);
+      temp.addMoney(value, number);
+      wallet.add(temp);
+    } else {
+      money.addMoney(value, number);
+    }
+
+
+  }
+
+
   private static void takeMoney(Money selectedItem, Wallet wallet, Scanner scanner) {
     HashMap<Double, Integer> moneyList = (selectedItem).getPresentMoney();
     int no = 0;
@@ -267,6 +310,12 @@ public class Main {
 
     System.out.println("Select the No. of the value to withdraw: ");
     String index = scanner.nextLine();
+    int min = 1;
+    int max = moneyList.size();
+    if (!ValidationUtils.isValidNumberAndValue(index, min, max)) {
+      return;
+    }
+
     double value = 0;
     for (Map.Entry<Double, Integer> entry : moneyList.entrySet()) {
       no += 1;
@@ -280,6 +329,12 @@ public class Main {
         "You can take up to : " + maxCount + " for " + selectedItem.getCurrency() + " " + value);
     System.out.println("Enter the money count: ");
     String moneyCountTemp = scanner.nextLine();
+    int min1 = 1;
+    int max1 = maxCount;
+    if (!ValidationUtils.isValidNumberAndValue(moneyCountTemp, min1, max1)) {
+      return;
+    }
+
     Integer moneyCount = Integer.parseInt(moneyCountTemp);
     if (maxCount >= moneyCount) {
       wallet.getMoney(selectedItem.getCurrency()).retireMoney(value, moneyCount);
@@ -300,10 +355,27 @@ public class Main {
     String offer = scanner.nextLine();
     System.out.print("Enter card number: ");
     String cardNumber = scanner.nextLine();
+    //validation
+
+    int min = 12;
+    int max = 19;
+    if (!ValidationUtils.isValidNumberAndLength(cardNumber, min, max)) {
+      return;
+    }
     System.out.print("Enter expiration date (yyyy-MM-dd): ");
-    LocalDate expirationDate = LocalDate.parse(scanner.nextLine());
+    String expirationDateTemp = scanner.nextLine();
+    if (!ValidationUtils.isValidLocalDateInput(expirationDateTemp)) {
+      return;
+    }
+    LocalDate expirationDate = LocalDate.parse(expirationDateTemp);
     System.out.print("Enter CVV number: ");
     String CVVNumber = scanner.nextLine();
+    //validation
+    int length = 3;
+    if (!ValidationUtils.isValidNumberAndLength(CVVNumber, length)) {
+      return;
+    }
+
     System.out.print("Enter card holder name: ");
     String cardHolderName = scanner.nextLine();
 
@@ -320,11 +392,13 @@ public class Main {
     System.out.println("Adding Driver License...");
 
     // Get user input for Driver License attributes
-    System.out.print("Enter state: ");
+    System.out.print("Enter State (Countries): ");
     String state = scanner.nextLine();
     System.out.print("Enter category (A, A1, B, BE, C, CE, D, DE): ");
     String categoryString = scanner.nextLine();
-
+    if (!ValidationUtils.isPresentInEnumArray(categoryString, DriverLicenseCategory.values())) {
+      return;
+    }
     // Convert the categoryString to DriverLicenseCategory
     DriverLicenseCategory category = DriverLicenseCategory.valueOf(categoryString.toUpperCase());
 
@@ -347,7 +421,11 @@ public class Main {
     String email = scanner.nextLine();
     System.out.print("Enter phone number: ");
     String phoneNumber = scanner.nextLine();
-    System.out.print("Enter website: ");
+    int min = 4;
+    int max = 13;
+    if (!ValidationUtils.isValidNumberAndLength(phoneNumber, min, max)) {
+      System.out.print("Enter website: ");
+    }
     String website = scanner.nextLine();
 
     // Create a VisitorCard object using the provided constructor
@@ -360,8 +438,6 @@ public class Main {
 
 
   private static void addIDPhoto(Wallet wallet, Scanner scanner) {
-
-    scanner.nextLine(); // Consume the newline character
     System.out.print("Enter description: ");
     String description = scanner.nextLine();
     // Continue with other attributes
@@ -371,17 +447,5 @@ public class Main {
     System.out.println("ID Photo added successfully.");
   }
 
-  private static void displayTotalMoney(Wallet wallet) {
-    System.out.println("Total Money in the Wallet:");
-    List<Money> moneyList = wallet.getMoneyList();
-    for (Money money : moneyList) {
-      System.out.println("Currency: " + money.getCurrency());
-      System.out.println("Total amount: " + money.getTotalAmount());
-      System.out.println("----------------");
-    }
-    if (moneyList.isEmpty()) {
-      System.out.println("No money at all!");
-    }
-    System.out.println(" ");
-  }
+
 }
