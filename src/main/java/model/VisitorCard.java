@@ -9,18 +9,15 @@ public class VisitorCard extends Item {
   private String email;
   private String phoneNumber;
   private String website;
+  private Integer itemCount;
 
-  public VisitorCard(String owner, String name, String email, String phoneNumber, String website) {
+  public VisitorCard(String owner, String name, String email, String phoneNumber, String website, Integer itemCount) {
     super(owner, "OK", Size.MEDIUM);
     this.name = name;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.website = website;
-    // Initialize other attributes
-  }
-
-  public void update() {
-    // Implement logic to update model.VisitorCard details
+    this.itemCount = itemCount;
   }
 
   @Override
@@ -34,5 +31,10 @@ public class VisitorCard extends Item {
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
+  }
+
+  @Override
+  public int getItemCount() {
+    return itemCount;
   }
 }

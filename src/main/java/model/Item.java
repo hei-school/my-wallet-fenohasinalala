@@ -53,4 +53,6 @@ public abstract class Item {
   }
 
   public abstract void viewItem();
+
+  public abstract int getItemCount();
 }

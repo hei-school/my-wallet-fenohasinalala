@@ -222,6 +222,11 @@ public class WalletService {
     System.out.println("Adding Visitor Card...");
 
     // Get user input for Visitor Card attributes
+    System.out.print("Enter count of visitor Card: ");
+    String itemCount = scanner.nextLine();
+    if (!ValidationUtils.isValidPositiveNumber(itemCount)){
+      return;
+    }
     System.out.print("Enter name: ");
     String name = scanner.nextLine();
     System.out.print("Enter email: ");
@@ -231,12 +236,13 @@ public class WalletService {
     int min = 4;
     int max = 13;
     if (!ValidationUtils.isValidNumberAndLength(phoneNumber, min, max)) {
-      System.out.print("Enter website: ");
+      return;
     }
+    System.out.print("Enter website: ");
     String website = scanner.nextLine();
 
     // Create a model.VisitorCard object using the provided constructor
-    VisitorCard visitorCard = new VisitorCard("me", name, email, phoneNumber, website);
+    VisitorCard visitorCard = new VisitorCard("me", name, email, phoneNumber, website, Integer.parseInt(itemCount));
 
     // Add the model.VisitorCard to the wallet
     wallet.add(visitorCard);
@@ -247,9 +253,13 @@ public class WalletService {
   public static void addIDPhoto(Wallet wallet, Scanner scanner) {
     System.out.print("Enter description: ");
     String description = scanner.nextLine();
-    // Continue with other attributes
+    System.out.print("Enter count of visitor Card: ");
+    String itemCount = scanner.nextLine();
+    if (!ValidationUtils.isValidPositiveNumber(itemCount)){
+      return;
+    }
 
-    IDPhoto idPhoto = new IDPhoto("me", description);
+    IDPhoto idPhoto = new IDPhoto("me", description,Integer.parseInt(itemCount));
     wallet.add(idPhoto);
     System.out.println("ID Photo added successfully.");
   }

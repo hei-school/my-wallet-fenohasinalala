@@ -6,14 +6,12 @@ import utils.DisplayUtils;
 public class IDPhoto extends Item {
 
   private String description;
+  private Integer itemCount;
 
-  public IDPhoto(String owner, String description) {
+  public IDPhoto(String owner, String description, Integer itemCount) {
     super(owner, "OK", Size.SMALL);
     this.description = description;
-  }
-
-  public void update() {
-    // Implement logic to update model.IDPhoto details
+    this.itemCount = itemCount;
   }
 
   @Override
@@ -25,5 +23,10 @@ public class IDPhoto extends Item {
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
+  }
+
+  @Override
+  public int getItemCount() {
+    return itemCount;
   }
 }

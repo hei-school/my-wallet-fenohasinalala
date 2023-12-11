@@ -41,12 +41,7 @@ public class Wallet {
     for (Item item : items) {
       Size itemSize = item.getSize();
       Size convertedSize = convertSize(itemSize);
-      if (item instanceof Money) {
-        itemCount += (size == convertedSize) ? ((Money) item).getTotalNumber() : 0;
-      } else {
-        itemCount += (size == convertedSize) ? getCapacityNumber(itemSize) : 0;
-      }
-
+        itemCount += (size == convertedSize) ? item.getItemCount() * getCapacityNumber(itemSize) : 0;
     }
 
     // Return the space available for the specified size

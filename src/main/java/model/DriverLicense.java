@@ -32,4 +32,10 @@ public class DriverLicense extends Item {
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
   }
+
+  @Override
+  public int getItemCount() {
+    return 1;
+  }
+
 }

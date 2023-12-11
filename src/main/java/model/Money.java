@@ -82,4 +82,10 @@ public class Money extends Item {
       }
     }
   }
+
+  @Override
+  public int getItemCount() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getItemCount'");
+  }
 }

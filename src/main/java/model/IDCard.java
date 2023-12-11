@@ -152,4 +152,9 @@ public class IDCard extends Item {
         ", creationLocalisation='" + creationLocalisation + '\'' +
         '}';
   }
+
+  @Override
+  public int getItemCount() {
+    return 1;
+  }
 }
