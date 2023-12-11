@@ -1,3 +1,5 @@
+package utils;
+
 public class InputValidationUtils {
 
   public static boolean isValidNumber(String value) {

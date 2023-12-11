@@ -1,3 +1,7 @@
+package model;
+
+import model.enums.Size;
+
 public class VisitorCard extends Item {
 
   private String name;
@@ -15,7 +19,7 @@ public class VisitorCard extends Item {
   }
 
   public void update() {
-    // Implement logic to update VisitorCard details
+    // Implement logic to update model.VisitorCard details
   }
 
   @Override

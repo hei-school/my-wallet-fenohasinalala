@@ -1,3 +1,8 @@
+package model;
+
+import model.enums.DriverLicenseCategory;
+import model.enums.Size;
+
 public class DriverLicense extends Item {
 
   private String state;
@@ -11,7 +16,7 @@ public class DriverLicense extends Item {
   }
 
   public void update() {
-    // Implement logic to update DriverLicense details
+    // Implement logic to update model.DriverLicense details
   }
 
   @Override

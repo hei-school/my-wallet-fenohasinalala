@@ -1,3 +1,7 @@
+package model;
+
+import model.enums.Size;
+
 public class IDPhoto extends Item {
 
   private String description;
@@ -8,7 +12,7 @@ public class IDPhoto extends Item {
   }
 
   public void update() {
-    // Implement logic to update IDPhoto details
+    // Implement logic to update model.IDPhoto details
   }
 
   @Override

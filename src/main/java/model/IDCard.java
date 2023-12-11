@@ -1,4 +1,7 @@
+package model;
+
 import java.time.LocalDate;
+import model.enums.Size;
 
 public class IDCard extends Item {
 
@@ -134,7 +137,7 @@ public class IDCard extends Item {
 
   @Override
   public String toString() {
-    return "IDCard{" +
+    return "model.IDCard{" +
         "state='" + state + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +

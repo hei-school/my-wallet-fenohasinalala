@@ -1,3 +1,5 @@
+package model.enums;
+
 public enum Size {
   SMALL,
   SMALL_AND_THICK,

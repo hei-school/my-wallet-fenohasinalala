@@ -1,7 +1,11 @@
+package model;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.enums.Currency;
+import model.enums.Size;
 
 public class Money extends Item {
 
@@ -58,9 +62,9 @@ public class Money extends Item {
 
   @Override
   public void viewItem() {
-    System.out.println("Type: Money");
-    System.out.println("Currency: " + currency);
-    System.out.println("Present Money:");
+    System.out.println("Type: model.Money");
+    System.out.println("model.enums.Currency: " + currency);
+    System.out.println("Present model.Money:");
     presentMoney.forEach((key, value) ->
         System.out.println(key + " x " + value + " = " + (key * value)));
 

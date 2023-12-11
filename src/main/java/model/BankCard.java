@@ -1,4 +1,7 @@
+package model;
+
 import java.time.LocalDate;
+import model.enums.Size;
 
 public class BankCard extends Item {
 

@@ -1,6 +1,10 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import model.enums.Currency;
+import model.enums.Size;
 
 public class Wallet {
 
@@ -76,12 +80,12 @@ public class Wallet {
     Size convertedSize = convertSize(item.getSize());
     if (item instanceof Money) {
       items.add(item);
-      System.out.println("Item added successfully.");
+      System.out.println("model.Item added successfully.");
     } else {
       int itemCount = getCapacityNumber(item.getSize());
       if (getSpaceAvailable(convertedSize) >= itemCount) {
         items.add(item);
-        System.out.println("Item added successfully.");
+        System.out.println("model.Item added successfully.");
       } else {
         System.out.println(
             "Space not available for the item size. Please check the available space.");

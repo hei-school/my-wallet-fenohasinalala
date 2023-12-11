@@ -1,5 +1,8 @@
+package model;
+
 import java.time.Instant;
 import java.util.UUID;
+import model.enums.Size;
 
 public abstract class Item {
 
