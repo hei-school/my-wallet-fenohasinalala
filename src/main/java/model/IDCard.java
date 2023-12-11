@@ -137,7 +137,7 @@ public class IDCard extends Item {
 
   @Override
   public String toString() {
-    return "model.IDCard{" +
+    return "IDCard{" +
         "state='" + state + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +

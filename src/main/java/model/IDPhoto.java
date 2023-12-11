@@ -18,13 +18,19 @@ public class IDPhoto extends Item {
   public void viewItem() {
     System.out.println("Type: ID Photo");
     System.out.println("Description: " + DisplayUtils.formatNullOrEmptyValue(description));
-
+    System.out.println("Number: " + itemCount);
     System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
     System.out.println("Added date: " + super.getAddedDate());
     System.out.println("--------------");
   }
+  public void addPartially(int number) {
+    itemCount = itemCount + number;
+  }
 
+  public void retirePartially(int number) {
+    itemCount = itemCount - number;
+  }
   @Override
   public int getItemCount() {
     return itemCount;

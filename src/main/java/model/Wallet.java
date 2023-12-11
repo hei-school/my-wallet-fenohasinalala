@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import model.enums.Currency;
 import model.enums.Size;
 
@@ -41,7 +42,7 @@ public class Wallet {
     for (Item item : items) {
       Size itemSize = item.getSize();
       Size convertedSize = convertSize(itemSize);
-        itemCount += (size == convertedSize) ? item.getItemCount() * getCapacityNumber(itemSize) : 0;
+      itemCount += (size == convertedSize) ? item.getItemCount() * getCapacityNumber(itemSize) : 0;
     }
 
     // Return the space available for the specified size
@@ -74,12 +75,12 @@ public class Wallet {
     Size convertedSize = convertSize(item.getSize());
     if (item instanceof Money) {
       items.add(item);
-      System.out.println("model.Item added successfully.");
+      System.out.println("Item added successfully.");
     } else {
       int itemCount = getCapacityNumber(item.getSize());
       if (getSpaceAvailable(convertedSize) >= itemCount) {
         items.add(item);
-        System.out.println("model.Item added successfully.");
+        System.out.println("Item added successfully.");
       } else {
         System.out.println(
             "Space not available for the item size. Please check the available space.");
@@ -88,10 +89,10 @@ public class Wallet {
 
   }
 
-  public Money getMoney(Currency currency) {
+  public Money getMoney(Currency currency, double value) {
     for (Item item : items) {
       if (item instanceof Money money) {
-        if (money.getCurrency() == currency) {
+        if (money.getCurrency() == currency && money.getValue() == value) {
           return money;
         }
       }
@@ -109,14 +110,13 @@ public class Wallet {
     return moneyList;
   }
 
-  public void cleanUpMoneyRest() {
+  public Item getItemById(String id){
     for (Item item : items) {
-      if (item instanceof Money) {
-        ((Money) item).removeZeroValueEntries();
-        if (((Money) item).getPresentMoney().isEmpty()) {
-          take(item);
-        }
+      if (Objects.equals(item.getId(), id)){
+        return item;
       }
     }
+    return null;
   }
+
 }

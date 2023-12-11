@@ -1,9 +1,5 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import model.enums.Currency;
 import model.enums.Size;
 import utils.DisplayUtils;
@@ -11,13 +7,20 @@ import utils.DisplayUtils;
 public class Money extends Item {
 
   private Currency currency;
-  private HashMap<Double, Integer> presentMoney;
 
-  public Money(String owner, Currency currency) {
+  private Integer itemCount;
+
+  private double value;
+
+  public Money(String owner, Currency currency, double value, Integer itemCount) {
     super(owner, "OK", Size.LARGE);
     this.currency = currency;
-    this.presentMoney = new HashMap<>();
-    // Initialize other attributes
+    this.value = value;
+    this.itemCount = itemCount;
+  }
+
+  public double getValue() {
+    return value;
   }
 
   public Currency getCurrency() {
@@ -28,44 +31,24 @@ public class Money extends Item {
     this.currency = currency;
   }
 
-  public HashMap<Double, Integer> getPresentMoney() {
-    return presentMoney;
-  }
-
-  public void setPresentMoney(HashMap<Double, Integer> presentMoney) {
-    this.presentMoney = presentMoney;
-  }
-
   public double getTotalAmount() {
-    double totalAmount = 0.0;
-    for (Map.Entry<Double, Integer> entry : presentMoney.entrySet()) {
-      totalAmount += entry.getKey() * entry.getValue();
-    }
-    return totalAmount;
+    return value * itemCount;
   }
 
-  public int getTotalNumber() {
-    int total = 0;
-    for (Map.Entry<Double, Integer> entry : presentMoney.entrySet()) {
-      total += entry.getValue();
-    }
-    return total;
+  public void addPartially(int number) {
+    itemCount = itemCount + number;
   }
 
-  public void addMoney(double value, int number) {
-    presentMoney.put(value, presentMoney.getOrDefault(value, 0) + number);
-  }
-
-  public void retireMoney(double value, int number) {
-    presentMoney.put(value, presentMoney.getOrDefault(value, 0) - number);
+  public void retirePartially(int number) {
+    itemCount = itemCount - number;
   }
 
   @Override
   public void viewItem() {
-    System.out.println("Type: model.Money");
-    System.out.println("model.enums.Currency: " + currency);
-    System.out.println("Present model.Money:");
-    presentMoney.forEach((key, value) -> System.out.println(key + " x " + value + " = " + (key * value)));
+    System.out.println("Type: Money");
+    System.out.println("Currency: " + currency);
+    System.out.println("Value: " + value);
+    System.out.println("Number: " + itemCount);
 
     System.out.println("Owner: " + DisplayUtils.formatNullOrEmptyValue(super.getOwner()));
     System.out.println("Status: " + DisplayUtils.formatNullOrEmptyValue(super.getStatus()));
@@ -73,19 +56,9 @@ public class Money extends Item {
     System.out.println("--------------");
   }
 
-  public void removeZeroValueEntries() {
-    Iterator<Entry<Double, Integer>> iterator = presentMoney.entrySet().iterator();
-    while (iterator.hasNext()) {
-      Map.Entry<Double, Integer> entry = iterator.next();
-      if (entry.getValue() == 0) {
-        iterator.remove();
-      }
-    }
-  }
 
   @Override
   public int getItemCount() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getItemCount'");
+    return itemCount;
   }
 }

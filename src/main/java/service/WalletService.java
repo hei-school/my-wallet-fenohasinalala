@@ -1,13 +1,12 @@
 package service;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import model.BankCard;
 import model.DriverLicense;
 import model.IDCard;
 import model.IDPhoto;
+import model.Item;
 import model.Money;
 import model.VisitorCard;
 import model.Wallet;
@@ -50,7 +49,7 @@ public class WalletService {
 
   public static void addMoney(Wallet wallet, Scanner scanner) {
     System.out.println(" ");
-    System.out.println("Adding model.Money...");
+    System.out.println("Adding Money...");
 
     // Display supported currencies
     System.out.println("Supported currencies:");
@@ -64,13 +63,12 @@ public class WalletService {
     }
 
     Currency selectedCurrency = Currency.valueOf(currencyInput);
-    Money money = wallet.getMoney(selectedCurrency);
     int no = 0;
     for (double v : selectedCurrency.getValues()) {
       no += 1;
       System.out.println("No. " + no + " - " + v);
     }
-    System.out.print("enter the no. of the model.Money: ");
+    System.out.print("enter the no. of the Money: ");
     String indexTemp = scanner.nextLine();
     int min = 1;
     int max = no;
@@ -79,6 +77,8 @@ public class WalletService {
     }
     int index = Integer.parseInt(indexTemp);
     double value = selectedCurrency.getValues()[index - 1];
+
+    Money money = wallet.getMoney(selectedCurrency, value);
 
     System.out.print("Enter the number: ");
     String numberTemp = scanner.nextLine();
@@ -94,44 +94,19 @@ public class WalletService {
     }
 
     if (money == null) {
-      Money temp = new Money("me", selectedCurrency);
-      temp.addMoney(value, number);
+      Money temp = new Money("me", selectedCurrency, value, number);
       wallet.add(temp);
     } else {
-      money.addMoney(value, number);
+      money.addPartially(number);
     }
-
 
   }
 
 
   public static void takeMoney(Money selectedItem, Wallet wallet, Scanner scanner) {
-    HashMap<Double, Integer> moneyList = (selectedItem).getPresentMoney();
-    int no = 0;
-    for (Map.Entry<Double, Integer> entry : moneyList.entrySet()) {
-      no += 1;
-      System.out.println("no." + no + " " + entry.getKey());
-    }
 
-    no = 0;
-
-    System.out.println("Select the No. of the value to withdraw: ");
-    String index = scanner.nextLine();
-    int min = 1;
-    int max = moneyList.size();
-    if (!ValidationUtils.isValidNumberAndValue(index, min, max)) {
-      return;
-    }
-
-    double value = 0;
-    for (Map.Entry<Double, Integer> entry : moneyList.entrySet()) {
-      no += 1;
-      if (Integer.parseInt(index) == no) {
-        value = entry.getKey();
-        break;
-      }
-    }
-    Integer maxCount = selectedItem.getPresentMoney().get(value);
+    Integer maxCount = selectedItem.getItemCount();
+    double value = selectedItem.getValue();
     System.out.println(
         "You can take up to : " + maxCount + " for " + selectedItem.getCurrency() + " " + value);
     System.out.println("Enter the money count: ");
@@ -143,12 +118,43 @@ public class WalletService {
     }
 
     Integer moneyCount = Integer.parseInt(moneyCountTemp);
-    if (maxCount >= moneyCount) {
-      wallet.getMoney(selectedItem.getCurrency()).retireMoney(value, moneyCount);
-      System.out.println(
-          "Successfully take " + maxCount + " x " + selectedItem.getCurrency() + " " + value);
+    if (moneyCount.equals(maxCount)) {
+      wallet.take(selectedItem);
+    } else {
+      wallet.getMoney(selectedItem.getCurrency(), value).retirePartially(moneyCount);
+    }
+    System.out.println(
+        "Successfully take " + moneyCount + " x " + selectedItem.getCurrency() + " " + value);
+  }
+
+
+  public static void takeMany(Item selectedItem, Wallet wallet, Scanner scanner) {
+
+    Integer maxCount = selectedItem.getItemCount();
+    System.out.println(
+        "You can take up to : " + maxCount + " for this item" );
+    System.out.println("Enter the item count: ");
+    String itemCountTemp = scanner.nextLine();
+    int min1 = 1;
+    int max1 = maxCount;
+    if (!ValidationUtils.isValidNumberAndValue(itemCountTemp, min1, max1)) {
+      return;
     }
 
+    Integer itemCount = Integer.parseInt(itemCountTemp);
+    if (itemCount.equals(maxCount)) {
+      wallet.take(selectedItem);
+    } else {
+      Item itemInWallet = wallet.getItemById(selectedItem.getId());
+      if (itemInWallet instanceof VisitorCard){
+        ((VisitorCard) itemInWallet).retirePartially(itemCount);
+      }
+      if (itemInWallet instanceof IDPhoto){
+        ((IDPhoto) itemInWallet).retirePartially(itemCount);
+      }
+    }
+    System.out.println(
+        "Successfully take " + itemCount );
   }
 
   public static void addBankCard(Wallet wallet, Scanner scanner) {
@@ -224,7 +230,7 @@ public class WalletService {
     // Get user input for Visitor Card attributes
     System.out.print("Enter count of visitor Card: ");
     String itemCount = scanner.nextLine();
-    if (!ValidationUtils.isValidPositiveNumber(itemCount)){
+    if (!ValidationUtils.isValidPositiveNumber(itemCount)) {
       return;
     }
     System.out.print("Enter name: ");
@@ -242,24 +248,24 @@ public class WalletService {
     String website = scanner.nextLine();
 
     // Create a model.VisitorCard object using the provided constructor
-    VisitorCard visitorCard = new VisitorCard("me", name, email, phoneNumber, website, Integer.parseInt(itemCount));
+    VisitorCard visitorCard = new VisitorCard("me", name, email, phoneNumber, website,
+        Integer.parseInt(itemCount));
 
     // Add the model.VisitorCard to the wallet
     wallet.add(visitorCard);
 
   }
 
-
   public static void addIDPhoto(Wallet wallet, Scanner scanner) {
     System.out.print("Enter description: ");
     String description = scanner.nextLine();
     System.out.print("Enter count of visitor Card: ");
     String itemCount = scanner.nextLine();
-    if (!ValidationUtils.isValidPositiveNumber(itemCount)){
+    if (!ValidationUtils.isValidPositiveNumber(itemCount)) {
       return;
     }
 
-    IDPhoto idPhoto = new IDPhoto("me", description,Integer.parseInt(itemCount));
+    IDPhoto idPhoto = new IDPhoto("me", description, Integer.parseInt(itemCount));
     wallet.add(idPhoto);
     System.out.println("ID Photo added successfully.");
   }

@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import model.IDPhoto;
 import model.Item;
 import model.Money;
+import model.VisitorCard;
 import model.Wallet;
 import model.enums.Size;
+import service.WalletService;
 import utils.ValidationUtils;
 
 public class Main {
@@ -73,7 +76,7 @@ public class Main {
     System.out.println("2. Display the capacity available of the wallet");
     System.out.println("3. Add item");
     System.out.println("4. Take item");
-    System.out.println("5. Display the sum of model.Money");
+    System.out.println("5. Display the sum of Money");
     System.out.println("6. Exit");
     System.out.print("Choose an option: ");
   }
@@ -98,7 +101,7 @@ public class Main {
 
   private static void displayWalletCapacity(Wallet wallet) {
     System.out.println();
-    System.out.println("model.Wallet Capacity:");
+    System.out.println("Wallet Capacity:");
     displaySpaceAvailable("Small", wallet, Size.SMALL);
     displaySpaceAvailable("Medium", wallet, Size.MEDIUM);
     displaySpaceAvailable("Large", wallet, Size.LARGE);
@@ -117,7 +120,7 @@ public class Main {
     // Display item types
     System.out.println("Select the type of item:");
     System.out.println("1. ID card");
-    System.out.println("2. model.Money");
+    System.out.println("2. Money");
     System.out.println("3. Bank Card");
     System.out.println("4. Driver License");
     System.out.println("5. Visitor Card");
@@ -194,10 +197,11 @@ public class Main {
 
         if (selectedItem instanceof Money) {
           takeMoney((Money) selectedItem, wallet, scanner);
+        } else if (selectedItem instanceof IDPhoto || selectedItem instanceof VisitorCard){
+          WalletService.takeMany(selectedItem,wallet,scanner);
         } else {
-
           wallet.take(selectedItem);
-          System.out.println("model.Item taken successfully.");
+          System.out.println("Item taken successfully.");
         }
       } else {
         System.out.println("Action canceled. Returning to the main menu.");
@@ -209,10 +213,10 @@ public class Main {
 
 
   private static void displayTotalMoney(Wallet wallet) {
-    System.out.println("Total model.Money in the model.Wallet:");
+    System.out.println("Total Money in the Wallet:");
     List<Money> moneyList = wallet.getMoneyList();
     for (Money money : moneyList) {
-      System.out.println("model.enums.Currency: " + money.getCurrency());
+      System.out.println("Currency: " + money.getCurrency());
       System.out.println("Total amount: " + money.getTotalAmount());
       System.out.println("----------------");
     }
